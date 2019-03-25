@@ -16,10 +16,10 @@ import 'ele-easy-table'
 Use in your projects
 
 ```
-<ele-easy-table :condition="condition" :table="table" :formData.sync="formData" @getList="handleSearch"></ele-easy-table>
+<ele-easy-table :form="form" :table="table" :formData.sync="formData" @getList="handleSearch"></ele-easy-table>
 ```
 
-[demo source code](https://github.com/vincentzyc/ele-easy-table/blob/master/src/components/ele-easy-table-demo.vue)
+see demo to get more details[demo source code](https://github.com/vincentzyc/ele-easy-table/blob/master/src/components/ele-easy-table-demo.vue)
 
 ### Attention
 
