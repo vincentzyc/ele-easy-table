@@ -1,7 +1,7 @@
 <template>
   <div class="base-tabel">
-    <el-form :model="formData" :inline="true" size="small" class="relative" v-if="condition.length>0">
-      <template v-for="(item,key) in condition">
+    <el-form :model="formData" :inline="true" size="small" class="relative" v-if="Object.keys(form).length>0" :style="form.style">
+      <template v-for="(item,key) in form.list">
         <el-form-item :label="item.label?item.label+'：':''" :key="key" v-if="item.type!=='slot'">
           <el-date-picker
             v-if="item.type==='datePicker'"
@@ -65,7 +65,7 @@
       </el-table-column>
     </el-table>
 
-    <div class="pagination" v-if="Object.keys(table).length>0 && pagination && table.list.length>0">
+    <div class="pagination" v-if="Object.keys(table).length>0 && pagination && Array.isArray(table.list) && table.list.length>0">
       <el-pagination
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
@@ -89,8 +89,18 @@ export default {
         return {}
       }
     },
-    condition: Array,
-    table: Object,
+    form: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    table: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
     pagination: {
       type: Boolean,
       default: true
@@ -125,7 +135,7 @@ export default {
 
 
 <style scoped>
-.mg-t20{
+.mg-t20 {
   margin-top: 20px;
 }
 .relative {

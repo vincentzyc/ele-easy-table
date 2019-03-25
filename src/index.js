@@ -1,9 +1,7 @@
 import Vue from "vue"
 import eleEasyTable from './components/ele-easy-table.vue'
 
-let MyPlugin = {
-	version: '1.0.0'
-};
+let MyPlugin = {};
 
 MyPlugin.install = function(Vue) {
 

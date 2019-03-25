@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!-- <ele-easy-table :condition="condition" :table="table" :pagination="false" :formData.sync="formData" @getList="handleSearch"> -->
-    <ele-easy-table :condition="condition" :table="table" :formData.sync="formData" @getList="handleSearch">
+    <!-- <ele-easy-table :form="form" :table="table" :pagination="false" :formData.sync="formData" @getList="handleSearch"> -->
+    <ele-easy-table :form="form" :table="table" :formData.sync="formData" @getList="handleSearch">
       <template slot="slot1">
         <el-button type="primary" size="small" @click="test1()">测试测试</el-button>
       </template>
@@ -32,41 +32,47 @@ export default {
         pageSize: 2,
         totalCount: 6,
       },
-      condition: [{
-        type: 'datePicker',
-        key: 'filterStartAndEndTime',
-        startKey: 'filterStartTime',
-        endKey: 'filterEndTime',
-        label: '起止时间：'
-      }, {
-        type: 'input',
-        key: 'modelName',
-        label: '输入框：'
-      }, {
-        type: 'select',
-        key: 'productType',
-        options: [{
-          label: '全部',
-          value: ''
+      form: {
+        style:{
+          background:'#f2f2f2',
+          paddingTop:'20px'
+        },
+        list: [{
+          type: 'datePicker',
+          key: 'filterStartAndEndTime',
+          startKey: 'filterStartTime',
+          endKey: 'filterEndTime',
+          label: '起止时间：'
         }, {
-          label: 'API',
-          value: 'API'
+          type: 'input',
+          key: 'modelName',
+          label: '输入框：'
         }, {
-          label: 'H5',
-          value: 'H5'
-        }],
-        label: '选择框：'
-      }, {
-        type: 'button',
-        text: '查询',
-        handleClick: () => {
-          console.log('11111111111');
-          this.handleSearch();
-        }
-      }, {
-        type: 'slot',
-        slot: 'slot1'
-      }],
+          type: 'select',
+          key: 'productType',
+          options: [{
+            label: '全部',
+            value: ''
+          }, {
+            label: 'API',
+            value: 'API'
+          }, {
+            label: 'H5',
+            value: 'H5'
+          }],
+          label: '选择框：'
+        }, {
+          type: 'button',
+          text: '查询',
+          handleClick: () => {
+            console.log('11111111111');
+            this.handleSearch();
+          }
+        }, {
+          type: 'slot',
+          slot: 'slot1'
+        }]
+      },
       table: {
         list: [{
           data1: '111',
