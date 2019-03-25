@@ -1,29 +1,20 @@
 # ele-easy-table
 
-## Project setup
+## Install
 ```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
+npm install ele-easy-table -S
 ```
 
-### Compiles and minifies for production
+### Quick Start
+
+在 main.js 文件中引入
+
 ```
-npm run build
+import 'ele-easy-table'
 ```
 
-### Run your tests
-```
-npm run test
-```
+在项目中使用
 
-### Lints and fixes files
-```
-npm run lint
-```
+<ele-easy-table :condition="condition" :table="table" :formData.sync="formData" @getList="handleSearch"></ele-easy-table>
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+具体例子可查看[demo源码](https://github.com/vincentzyc/ele-easy-table/blob/master/src/components/ele-easy-table-demo.vue)
