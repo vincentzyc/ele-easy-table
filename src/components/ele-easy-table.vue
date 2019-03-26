@@ -56,7 +56,7 @@
             <span v-html="column.format(row)"></span>
           </template>
           <template v-if="column.type==='textBtn'">
-            <el-button v-for="(btn,key) in column.textBtn" :key="key" type="text" @click="btn.handleClick(row)">{{btn.text}}</el-button>
+            <el-button v-for="(btn,key) in column.textBtn" :key="key" type="text" @click="btn.handleClick(row)" v-html="btn.text||btn.funcText(row)"></el-button>
           </template>
           <template v-if="column.type==='slot'">
             <slot :name="column.slot" :row="row"></slot>
