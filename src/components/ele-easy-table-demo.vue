@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <ele-easy-table :form="form" :table="table" :pagination="false" :formData.sync="formData" @getList="handleSearch"> -->
     <ele-easy-table :form="form" :table="table" :formData.sync="formData" @getList="handleSearch">
       <template slot="slot1">
         <el-button type="primary" size="small" @click="test1()">测试测试</el-button>
@@ -33,9 +32,9 @@ export default {
         totalCount: 6,
       },
       form: {
-        style:{
-          background:'#f2f2f2',
-          paddingTop:'20px'
+        style: {
+          background: '#f2f2f2',
+          paddingTop: '20px'
         },
         list: [{
           type: 'datePicker',
