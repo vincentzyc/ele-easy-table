@@ -75,26 +75,27 @@ export default {
       table: {
         list: [{
           data1: '111',
-          data2: '111111',
+          data2: '第111111',
         }, {
           data1: '222',
-          data2: '222222',
+          data2: '第222222',
         }, {
           data1: '333',
-          data2: '333333',
+          data2: '第333333',
         }, {
-          data1: '111',
-          data2: '111111',
+          data1: '444',
+          data2: '第4444444',
         }, {
-          data1: '222',
-          data2: '222222',
+          data1: '555',
+          data2: '第555555',
         }, {
-          data1: '333',
-          data2: '333333',
+          data1: '666',
+          data2: '第666666',
         }],
         columns: [{
           key: 'data1',
-          label: '标题1'
+          label: '标题1',
+          sortable: true
         }, {
           key: 'data2',
           label: '标题2',

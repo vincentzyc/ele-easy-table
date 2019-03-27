@@ -49,7 +49,16 @@
         width="55"
         v-if="pagination"
       ></el-table-column>
-      <el-table-column v-for="column in table.columns" :key="column.key+column.label" :prop="column.key" :label="column.label" align="center">
+      <el-table-column
+        v-for="column in table.columns"
+        :key="column.key+column.label"
+        :prop="column.key"
+        :label="column.label"
+        :sortable="column.sortable"
+        :sort-method="column.sortMethod"
+        :sort-by="column.sortBy"
+        align="center"
+      >
         <template slot-scope="{row}">
           <template v-if="!column.hasOwnProperty('type')">{{ row[column.key] }}</template>
           <template v-if="column.type==='format'">
