@@ -1,5 +1,5 @@
 <template>
-  <div class="base-tabel">
+  <div class="clearfix">
     <el-form :model="formData" :inline="true" size="small" class="relative" v-if="Object.keys(form).length>0" :style="form.style">
       <template v-for="(item,key) in form.list">
         <el-form-item :label="item.label?item.label+'：':''" :key="key" v-if="item.type!=='slot'">
@@ -135,6 +135,14 @@ export default {
 
 
 <style scoped>
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: " ";
+}
+.clearfix:after {
+  clear: both;
+}
 .mg-t20 {
   margin-top: 20px;
 }
