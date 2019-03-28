@@ -19,6 +19,7 @@
             v-if="item.type==='select'"
             v-model="formData[item.key]"
             size="small"
+            :filterable="item.filterable"
             :style="item.style"
             :placeholder="'请选择'+item.label"
             :multiple="item.multiple||false"
