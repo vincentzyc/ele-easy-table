@@ -49,6 +49,9 @@ export default {
         }, {
           type: 'select',
           key: 'productType',
+          config: {
+            filterable: true
+          },
           options: [{
             label: '全部',
             value: ''
@@ -95,7 +98,9 @@ export default {
         columns: [{
           key: 'data1',
           label: '标题1',
-          sortable: true
+          config: {
+            sortable: true
+          }
         }, {
           key: 'data2',
           label: '标题2',

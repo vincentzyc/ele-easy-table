@@ -19,10 +19,9 @@
             v-if="item.type==='select'"
             v-model="formData[item.key]"
             size="small"
-            :filterable="item.filterable"
             :style="item.style"
             :placeholder="'请选择'+item.label"
-            :multiple="item.multiple||false"
+            v-bind="item.config"
           >
             <el-option v-for="option in item.options" :label="option.label" :value="option.value" :key="option.value"></el-option>
           </el-select>
@@ -41,6 +40,7 @@
       border
       class="mg-t20"
       v-if="Object.keys(table).length>0"
+      v-bind="table.config"
     >
       <el-table-column
         :label="table.indexLabel||'序号'"
@@ -55,10 +55,8 @@
         :key="column.key+column.label"
         :prop="column.key"
         :label="column.label"
-        :sortable="column.sortable"
-        :sort-method="column.sortMethod"
-        :sort-by="column.sortBy"
         align="center"
+        v-bind="column.config"
       >
         <template slot-scope="{row}">
           <template v-if="!column.hasOwnProperty('type')">{{ row[column.key] }}</template>
