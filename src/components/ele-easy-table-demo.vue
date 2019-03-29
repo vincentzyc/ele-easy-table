@@ -41,11 +41,11 @@ export default {
           key: 'filterStartAndEndTime',
           startKey: 'filterStartTime',
           endKey: 'filterEndTime',
-          label: '起止时间：'
+          label: '起止时间'
         }, {
           type: 'input',
           key: 'modelName',
-          label: '输入框：'
+          label: '输入框'
         }, {
           type: 'select',
           key: 'productType',
@@ -62,7 +62,15 @@ export default {
             label: 'H5',
             value: 'H5'
           }],
-          label: '选择框：'
+          label: '选择框'
+        }, {
+          type: 'select',
+          key: 'productName',
+          config: {
+            filterable: true
+          },
+          options: ['产品名称1', '产品名称2', '产品名称3'],
+          label: '产品名称'
         }, {
           type: 'button',
           text: '查询',

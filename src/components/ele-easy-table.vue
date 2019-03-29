@@ -23,7 +23,7 @@
             :placeholder="'请选择'+item.label"
             v-bind="item.config"
           >
-            <el-option v-for="option in item.options" :label="option.label" :value="option.value" :key="option.value"></el-option>
+            <el-option v-for="option in item.options" :label="option.label||option" :value="option.value||option" :key="option.value||option"></el-option>
           </el-select>
           <el-button v-if="item.type==='button'" type="primary" size="small" @click="item.handleClick()" :style="item.style">{{item.text}}</el-button>
         </el-form-item>
