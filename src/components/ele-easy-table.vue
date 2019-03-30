@@ -1,6 +1,13 @@
 <template>
   <div class="clearfix">
-    <el-form :model="formData" :inline="true" size="small" class="relative" v-if="Object.keys(form).length>0" :style="form.style">
+    <el-form
+      :model="formData"
+      :inline="true"
+      size="small"
+      class="relative"
+      v-if="Object.keys(form).length>0"
+      :style="form.style"
+    >
       <template v-for="(item,key) in form.list">
         <el-form-item :label="item.label?item.label+'：':''" :key="key" v-if="item.type!=='slot'">
           <el-date-picker
@@ -14,7 +21,13 @@
             size="small"
             :style="item.style"
           ></el-date-picker>
-          <el-input v-if="item.type==='input'" v-model="formData[item.key]" :placeholder="'请输入'+item.label" size="small" :style="item.style"></el-input>
+          <el-input
+            v-if="item.type==='input'"
+            v-model="formData[item.key]"
+            :placeholder="'请输入'+item.label"
+            size="small"
+            :style="item.style"
+          ></el-input>
           <el-select
             v-if="item.type==='select'"
             v-model="formData[item.key]"
@@ -23,9 +36,20 @@
             :placeholder="'请选择'+item.label"
             v-bind="item.config"
           >
-            <el-option v-for="option in item.options" :label="option.label||option" :value="option.value||option" :key="option.value||option"></el-option>
+            <el-option
+              v-for="option in item.options"
+              :label="typeof(option.label)!=='undefined'?option.label:option"
+              :value="typeof(option.value)!=='undefined'?option.value:option"
+              :key="typeof(option.value)!=='undefined'?option.value:option"
+            ></el-option>
           </el-select>
-          <el-button v-if="item.type==='button'" type="primary" size="small" @click="item.handleClick()" :style="item.style">{{item.text}}</el-button>
+          <el-button
+            v-if="item.type==='button'"
+            type="primary"
+            size="small"
+            @click="item.handleClick()"
+            :style="item.style"
+          >{{item.text}}</el-button>
         </el-form-item>
         <slot v-else :name="item.slot"></slot>
       </template>
@@ -64,7 +88,13 @@
             <span v-html="column.format(row)"></span>
           </template>
           <template v-if="column.type==='textBtn'">
-            <el-button v-for="(btn,key) in column.textBtn" :key="key" type="text" @click="btn.handleClick(row)" v-html="btn.text||btn.funcText(row)"></el-button>
+            <el-button
+              v-for="(btn,key) in column.textBtn"
+              :key="key"
+              type="text"
+              @click="btn.handleClick(row)"
+              v-html="btn.text||btn.funcText(row)"
+            ></el-button>
           </template>
           <template v-if="column.type==='slot'">
             <slot :name="column.slot" :row="row"></slot>
@@ -73,7 +103,10 @@
       </el-table-column>
     </el-table>
 
-    <div class="pagination" v-if="Object.keys(table).length>0 && pagination && Array.isArray(table.list) && table.list.length>0">
+    <div
+      class="pagination"
+      v-if="Object.keys(table).length>0 && pagination && Array.isArray(table.list) && table.list.length>0"
+    >
       <el-pagination
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
