@@ -1,13 +1,6 @@
 <template>
   <div class="clearfix">
-    <el-form
-      :model="formData"
-      :inline="true"
-      size="small"
-      class="relative"
-      v-if="Object.keys(form).length>0"
-      :style="form.style"
-    >
+    <el-form :model="formData" :inline="true" size="small" class="relative" v-if="Object.keys(form).length>0" :style="form.style">
       <template v-for="(item,key) in form.list">
         <el-form-item :label="item.label?item.label+'：':''" :key="key" v-if="item.type!=='slot'">
           <el-date-picker
@@ -21,13 +14,7 @@
             size="small"
             :style="item.style"
           ></el-date-picker>
-          <el-input
-            v-if="item.type==='input'"
-            v-model="formData[item.key]"
-            :placeholder="'请输入'+item.label"
-            size="small"
-            :style="item.style"
-          ></el-input>
+          <el-input v-if="item.type==='input'" v-model="formData[item.key]" :placeholder="'请输入'+item.label" size="small" :style="item.style"></el-input>
           <el-select
             v-if="item.type==='select'"
             v-model="formData[item.key]"
@@ -43,13 +30,7 @@
               :key="typeof(option.value)!=='undefined'?option.value:option"
             ></el-option>
           </el-select>
-          <el-button
-            v-if="item.type==='button'"
-            type="primary"
-            size="small"
-            @click="item.handleClick()"
-            :style="item.style"
-          >{{item.text}}</el-button>
+          <el-button v-if="item.type==='button'" type="primary" size="small" @click="item.handleClick()" :style="item.style">{{item.text}}</el-button>
         </el-form-item>
         <slot v-else :name="item.slot"></slot>
       </template>
@@ -66,14 +47,7 @@
       v-if="Object.keys(table).length>0"
       v-bind="table.config"
     >
-      <el-table-column
-        :label="table.indexLabel||'序号'"
-        align="center"
-        type="index"
-        :index="showTableIndex(formData.pageIndex,formData.pageSize)"
-        width="55"
-        v-if="pagination"
-      ></el-table-column>
+      <el-table-column :label="table.indexLabel||'序号'" align="center" type="index" :index="tableIndex" width="55" v-if="pagination"></el-table-column>
       <el-table-column
         v-for="column in table.columns"
         :key="column.key+column.label"
@@ -88,13 +62,7 @@
             <span v-html="column.format(row)"></span>
           </template>
           <template v-if="column.type==='textBtn'">
-            <el-button
-              v-for="(btn,key) in column.textBtn"
-              :key="key"
-              type="text"
-              @click="btn.handleClick(row)"
-              v-html="btn.text||btn.funcText(row)"
-            ></el-button>
+            <el-button v-for="(btn,key) in column.textBtn" :key="key" type="text" @click="btn.handleClick(row)" v-html="btn.text||btn.funcText(row)"></el-button>
           </template>
           <template v-if="column.type==='slot'">
             <slot :name="column.slot" :row="row"></slot>
@@ -103,10 +71,7 @@
       </el-table-column>
     </el-table>
 
-    <div
-      class="pagination"
-      v-if="Object.keys(table).length>0 && pagination && Array.isArray(table.list) && table.list.length>0"
-    >
+    <div class="pagination" v-if="Object.keys(table).length>0 && pagination && Array.isArray(table.list) && table.list.length>0">
       <el-pagination
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
@@ -139,7 +104,9 @@ export default {
     table: {
       type: Object,
       default() {
-        return {}
+        return {
+          list: []
+        }
       }
     },
     pagination: {
@@ -147,10 +114,17 @@ export default {
       default: true
     }
   },
+  data() {
+    return {
+      tableIndex: 0,
+    }
+  },
+  watch: {
+    'table.list'() {
+      this.tableIndex = this.formData.pageSize * (this.formData.pageIndex - 1) + 1;
+    }
+  },
   methods: {
-    showTableIndex(pageIndex = 1, pageSize = 10) {
-      return (pageIndex - 1) * pageSize + 1;
-    },
     getDate(item) {
       this.formData[item.startKey] = this.formData[item.key] ? this.formData[item.key][0] : "";
       this.formData[item.endKey] = this.formData[item.key] ? this.formData[item.key][1] : "";
@@ -161,14 +135,14 @@ export default {
         pageIndex: 1,
         pageSize: val
       })
-      this.$emit('getList')
+      this.$emit('getList');
     },
     handleCurrentChange(val) {
       this.$emit('update:formData', {
         ...this.formData,
         pageIndex: val
       })
-      this.$emit('getList')
+      this.$emit('getList');
     }
   }
 };

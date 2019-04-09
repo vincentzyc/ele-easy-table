@@ -28,7 +28,7 @@ export default {
         filterEndTime: "2019-01-07",  //设置默认值
         filterStartAndEndTime: ["2019-01-01", "2019-01-07"], //设置默认值
         pageIndex: 1,
-        pageSize: 2,
+        pageSize: 10,
         totalCount: 6,
       },
       form: {
@@ -95,7 +95,7 @@ export default {
           data2: '第333333',
         }, {
           data1: '444',
-          data2: '第4444444',
+          data2: '第444444',
         }, {
           data1: '555',
           data2: '第555555',
@@ -140,11 +140,11 @@ export default {
     }
   },
   methods: {
-    handleSearch() {
-      console.log('2222222222222');
+    async handleSearch() {
+      console.log(this.formData);
     },
     test1() {
-      console.log(this.formData);
+      console.log('test1test1test1test1');
     },
     handleView(command) {
       console.log(command);
