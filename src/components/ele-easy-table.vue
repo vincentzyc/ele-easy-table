@@ -47,7 +47,15 @@
       v-if="Object.keys(table).length>0"
       v-bind="table.config"
     >
-      <el-table-column :label="table.indexLabel||'序号'" align="center" type="index" :index="tableIndex" width="55" v-if="pagination"></el-table-column>
+      <el-table-column
+        :label="table.indexLabel||'序号'"
+        :fixed="table.indexFixed||false"
+        align="center"
+        type="index"
+        :index="tableIndex"
+        width="55"
+        v-if="table.showIndex!==false&&pagination"
+      ></el-table-column>
       <el-table-column
         v-for="column in table.columns"
         :key="column.key+column.label"
@@ -120,8 +128,11 @@ export default {
     }
   },
   watch: {
-    'table.list'() {
-      this.tableIndex = this.formData.pageSize * (this.formData.pageIndex - 1) + 1;
+    'table.list': {
+      handler() {
+        this.tableIndex = this.formData.pageSize * (this.formData.pageIndex - 1) + 1;
+      },
+      immediate: true
     }
   },
   methods: {

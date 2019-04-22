@@ -54,6 +54,9 @@ import 'ele-easy-table'
 |list|表格数据列表|Array|-|-|
 |columns|表格头部列表|Array|-|详见[demo源码](https://github.com/vincentzyc/ele-easy-table/blob/master/src/components/ele-easy-table-demo.vue)|
 |isLoading|是否显示表格加载动画|Boolean|-|
+|showIndex|是否显示序号列|Boolean|true|
+|indexFixed|是否固定序号列|Boolean|false|
+|indexLabel|自定义序号列表头文字|String|序号|
 |config|el-table原生配置|Object|-|
 
 #### Methods
