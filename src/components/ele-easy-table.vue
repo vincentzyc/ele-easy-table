@@ -95,6 +95,7 @@
                 type="text"
                 @click="btn.handleClick(row)"
                 v-html="btn.text||btn.funcText(row)"
+                v-bind="btn.config||btn.funcConfig?btn.funcConfig(row):{}"
                 class="mg-r10"
               ></el-button>
             </span>

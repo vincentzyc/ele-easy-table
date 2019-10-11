@@ -122,6 +122,9 @@ export default {
           type: 'textBtn',
           textBtn: [{
             text: "操作一",
+            funcConfig: row => {
+              if (row.data1 === '333') return { disabled: true }
+            },
             handleClick: row => { console.log(row, '操作一') }
           }, {
             text: "操作二",
