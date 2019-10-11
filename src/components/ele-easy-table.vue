@@ -7,6 +7,7 @@
       class="relative"
       v-if="Object.keys(form).length>0"
       :style="form.style"
+      :class="form.class"
     >
       <template v-for="(item,key) in form.list">
         <el-form-item :label="item.label?item.label+'：':''" :key="key" v-if="item.type!=='slot'">
