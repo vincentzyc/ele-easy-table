@@ -69,7 +69,7 @@
       v-on="$listeners"
     >
       <el-table-column
-        v-if="table.selection.show&&table.list.length>0"
+        v-if="table.selection&&table.selection.show&&table.list.length>0"
         type="selection"
         align="center"
         v-bind="table.selection.config"
