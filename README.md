@@ -44,8 +44,8 @@ import 'ele-easy-table'
 
 |属性 | 说明 | 类型 | 默认值 | 备注 |
 |----|-----|------|------|------|
-|style|表格查询条件区域样式设置|Object|-|-|
 |class|表格查询条件区域样式设置|Object|-|-|
+|style|表格查询条件区域内联样式设置|Object|-|-|
 |list|表格查询条件列表|Array|-|详见[demo源码](https://github.com/vincentzyc/ele-easy-table/blob/master/src/components/ele-easy-table-demo.vue)|
 
 - table 子配置项
