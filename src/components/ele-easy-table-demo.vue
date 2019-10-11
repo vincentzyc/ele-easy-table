@@ -1,6 +1,12 @@
 <template>
   <div>
-    <ele-easy-table :form="form" :table="table" :formData.sync="formData" @getList="handleSearch">
+    <ele-easy-table
+      :form="form"
+      :table="table"
+      :formData.sync="formData"
+      @getList="handleSearch"
+      @selection-change="handleSelectionChange"
+    >
       <template slot="slot1">
         <el-button type="primary" size="small" @click="test1()">测试测试</el-button>
       </template>
@@ -84,6 +90,12 @@ export default {
         }]
       },
       table: {
+        selection: {
+          show: true,
+          config: {
+            selectable: row => row.data1 !== '222'
+          }
+        },
         list: [{
           data1: '111',
           data2: '第111111',
@@ -145,6 +157,9 @@ export default {
   methods: {
     async handleSearch() {
       console.log(this.formData);
+    },
+    handleSelectionChange(multipleSelection) {
+      console.log(multipleSelection);
     },
     test1() {
       console.log('test1test1test1test1');

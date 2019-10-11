@@ -38,7 +38,7 @@ import 'ele-easy-table'
 |table|表格展示区域|Object|{}|
 |formData.sync|表格查询字段|Object|{}|
 |pagination|是否显示分页区域|Boolean|true|
-
+|other attributes|el-table原生属性|参考[el-table原生属性](https://element.eleme.cn/#/zh-CN/component/table)|-|
 
 - form 子配置项
 
@@ -57,9 +57,19 @@ import 'ele-easy-table'
 |showIndex|是否显示序号列|Boolean|true|
 |indexFixed|是否固定序号列|Boolean|false|
 |indexLabel|自定义序号列表头文字|String|序号|
-|config|el-table原生配置|Object|-|
+|selection|表格多选配置|Object|{}|
+
+- selection 子配置项
+
+|属性 | 说明 | 类型 | 默认值 | 备注 |
+|----|-----|------|------|------|
+|config|表格多选属性|Object|-|-|
+
 
 #### Methods
 
 ##### @getList()
 页码切换或者每页显示数目更改时执行，获取数据，然后赋值给 table.list 更新列表
+
+##### other element table events
+el-table原生事件，例如：@selection-change="handleSelectionChange" 详见[demo源码](https://github.com/vincentzyc/ele-easy-table/blob/master/src/components/ele-easy-table-demo.vue)

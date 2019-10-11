@@ -64,8 +64,15 @@
       border
       class="mg-t20"
       v-if="Object.keys(table).length>0"
-      v-bind="table.config"
+      v-bind="$attrs"
+      v-on="$listeners"
     >
+      <el-table-column
+        v-if="table.selection.show&&table.list.length>0"
+        type="selection"
+        align="center"
+        v-bind="table.selection.config"
+      ></el-table-column>
       <el-table-column
         :label="table.indexLabel||'序号'"
         :fixed="table.indexFixed||false"
