@@ -21,6 +21,7 @@
             @change="getDate(item)"
             size="small"
             :style="item.style"
+            v-bind="item.config"
           ></el-date-picker>
           <el-input
             v-if="item.type==='input'"
@@ -28,6 +29,7 @@
             :placeholder="'请输入'+item.label"
             size="small"
             :style="item.style"
+            v-bind="item.config"
           ></el-input>
           <el-select
             v-if="item.type==='select'"
@@ -50,6 +52,7 @@
             size="small"
             @click="item.handleClick()"
             :style="item.style"
+            v-bind="item.config"
           >{{item.text}}</el-button>
         </el-form-item>
         <slot v-else :name="item.slot"></slot>
