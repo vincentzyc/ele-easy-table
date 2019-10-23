@@ -37,7 +37,7 @@ import 'ele-easy-table'
 |form|表格查询条件区域|Object|{}|
 |table|表格展示区域|Object|{}|
 |formData.sync|表格查询字段|Object|{}|
-|pagination|是否显示分页区域|Boolean|true|
+|pagination|是否显示分页区域|[Boolean,Object]|true|
 |other attributes|el-table原生属性|参考[el-table原生属性](https://element.eleme.cn/#/zh-CN/component/table)|-|
 
 - form 子配置项
@@ -66,6 +66,9 @@ import 'ele-easy-table'
 |----|-----|------|------|------|
 |config|表格多选属性|Object|-|-|
 
+- pagination 子配置项
+
+[el-pagination原生属性](https://element.eleme.cn/#/zh-CN/component/pagination)
 
 #### Methods
 

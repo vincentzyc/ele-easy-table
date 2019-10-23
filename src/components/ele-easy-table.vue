@@ -125,11 +125,12 @@
       <el-pagination
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
-        :page-sizes="[10, 20, 50, 100]"
         :current-page="formData.pageIndex||1"
         :page-size="formData.pageSize||10"
         :total="formData.totalCount||0"
-        :layout="formData.layout||'total, sizes, prev, pager, next, jumper'"
+        v-bind="typeof(pagination)==='object'?pagination:{}"
+        :page-sizes="pagination.pageSizes||[10, 20, 50, 100]"
+        :layout="pagination.layout||'total, sizes, prev, pager, next, jumper'"
       ></el-pagination>
     </div>
   </div>
@@ -160,7 +161,7 @@ export default {
       }
     },
     pagination: {
-      type: Boolean,
+      type: [Boolean, Object],
       default: true
     }
   },
