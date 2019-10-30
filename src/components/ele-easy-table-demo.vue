@@ -22,6 +22,12 @@
           </el-dropdown-menu>
         </el-dropdown>
       </template>
+      <template slot="header1">
+        <span>
+          <span>自定义标题</span>
+          <i class="el-icon-star-on"></i>
+        </span>
+      </template>
     </ele-easy-table>
   </div>
 </template>
@@ -124,6 +130,7 @@ export default {
         }, {
           key: 'data2',
           label: '标题2',
+          header: "header1",
           type: 'format',
           format: row => {
             return row.data2 + '%';

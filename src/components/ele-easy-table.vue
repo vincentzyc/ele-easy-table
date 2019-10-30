@@ -94,6 +94,11 @@
         align="center"
         v-bind="column.config"
       >
+        <template slot="header" slot-scope="{row}">
+          <slot v-if="column.header" :name="column.header" :row="row"></slot>
+          <template v-else>{{column.label}}</template>
+        </template>
+
         <template slot-scope="{row}">
           <template v-if="!column.hasOwnProperty('type')">{{ row[column.key] }}</template>
           <template v-if="column.type==='format'">
