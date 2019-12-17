@@ -29,12 +29,23 @@
         </span>
       </template>
     </ele-easy-table>
+    <CustomColumn
+      :show.sync="showCustomColumn"
+      localName="ELEEASYTABLE_CUSTOM_COLUMNS"
+      :baseColumns="baseColumns"
+      :columns.sync="table.columns"
+    />
   </div>
 </template>
 <script>
+import CustomColumn from './custom-column'
 export default {
+  components: {
+    CustomColumn
+  },
   data() {
     return {
+      showCustomColumn: false,
       formData: {
         filterStartTime: "2019-01-01",  //设置默认值
         filterEndTime: "2019-01-07",  //设置默认值
@@ -43,6 +54,44 @@ export default {
         pageSize: 10,
         totalCount: 6,
       },
+      baseColumns: [{
+        key: 'data1',
+        label: '标题1',
+        config: {
+          sortable: true
+        }
+      }, {
+        key: 'data2',
+        label: '标题2',
+        header: "header1",
+        type: 'format',
+        format: row => {
+          return row.data2 + '%';
+        }
+      }, {
+        key: 'data3',
+        label: '操作',
+        type: 'textBtn',
+        disabledCustom:true,
+        textBtn: [{
+          text: "操作一",
+          funcConfig: row => {
+            if (row.data1 === '333') return { disabled: true }
+          },
+          handleClick: row => { console.log(row, '操作一') }
+        }, {
+          text: "操作二",
+          handleClick: row => { console.log(row, '操作二') }
+        }, {
+          text: "操作三",
+          handleClick: row => { console.log(row, '操作三') }
+        }]
+      }, {
+        key: 'data4',
+        label: '编辑',
+        type: 'slot',
+        slot: 'slot2'
+      }],
       form: {
         style: {
           background: '#f2f2f2',
@@ -91,6 +140,12 @@ export default {
             this.handleSearch();
           }
         }, {
+          type: 'button',
+          text: '自定义列',
+          handleClick: () => {
+            this.showCustomColumn = true;
+          }
+        }, {
           type: 'slot',
           slot: 'slot1'
         }]
@@ -121,43 +176,7 @@ export default {
           data1: '666',
           data2: '第666666',
         }],
-        columns: [{
-          key: 'data1',
-          label: '标题1',
-          config: {
-            sortable: true
-          }
-        }, {
-          key: 'data2',
-          label: '标题2',
-          header: "header1",
-          type: 'format',
-          format: row => {
-            return row.data2 + '%';
-          }
-        }, {
-          key: 'data3',
-          label: '操作',
-          type: 'textBtn',
-          textBtn: [{
-            text: "操作一",
-            funcConfig: row => {
-              if (row.data1 === '333') return { disabled: true }
-            },
-            handleClick: row => { console.log(row, '操作一') }
-          }, {
-            text: "操作二",
-            handleClick: row => { console.log(row, '操作二') }
-          }, {
-            text: "操作三",
-            handleClick: row => { console.log(row, '操作三') }
-          }]
-        }, {
-          key: 'data4',
-          label: '编辑',
-          type: 'slot',
-          slot: 'slot2'
-        }]
+        columns: []
       }
     }
   },
