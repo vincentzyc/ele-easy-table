@@ -33,6 +33,7 @@
       :show.sync="showCustomColumn"
       localName="ELEEASYTABLE_CUSTOM_COLUMNS"
       :baseColumns="baseColumns"
+      :defaultColumns="defaultColumns"
       :columns.sync="table.columns"
     />
   </div>
@@ -54,6 +55,7 @@ export default {
         pageSize: 10,
         totalCount: 6,
       },
+      defaultColumns:['data1','data3'],
       baseColumns: [{
         key: 'data1',
         label: '标题1',

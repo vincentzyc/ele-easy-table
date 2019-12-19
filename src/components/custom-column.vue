@@ -34,6 +34,7 @@
 //   :show.sync="showCustomColumn" //打开弹框
 //   :localName="localName"  //存本地name
 //   :baseColumns="baseColumns"  //全部列
+//   :defaultColumns="defaultColumns" //首次默认显示的列(不传则显示全部)
 //   :columns.sync="table.columns" //展示的列
 //  />
 import Draggable from 'vuedraggable'
@@ -62,7 +63,8 @@ export default {
     disabledColumns: {
       type: Array,
       default: () => []
-    }
+    },
+    defaultColumns: Array
   },
   data() {
     return {
@@ -97,15 +99,19 @@ export default {
       return window.JSON.parse(str);
     },
     initLocalStorage() {
-      let checkedColumns = this.getLStorage(this.localName);
+      let checkedColumns = this.getLStorage(this.localName) || this.defaultColumns;
       if (Array.isArray(checkedColumns) && checkedColumns.length > 0) {
-        let hadCheckedColumns = [];
-        checkedColumns.forEach(v => hadCheckedColumns.push(this.baseColumns.find(item => item.key === v)))
+        let hadCheckedColumns = [], checkedColumn = {};
+        checkedColumns.forEach((v, i) => {
+          checkedColumn = this.baseColumns.find(item => item.key === v);
+          checkedColumn && checkedColumn.key ? hadCheckedColumns.push(checkedColumn) : checkedColumns.splice(i, 1)
+        })
         this.baseColumns.forEach(item => {
           if (!checkedColumns.includes(item.key)) this.allColumns.push(item);
         })
         this.allColumns = hadCheckedColumns.concat(this.allColumns);
-        return this.$emit('update:columns', hadCheckedColumns);
+        this.$emit('update:columns', hadCheckedColumns);
+        return this.setLStorage(this.localName, checkedColumns);
       }
       this.allColumns = this.baseColumns;
       return this.$emit('update:columns', this.baseColumns);
