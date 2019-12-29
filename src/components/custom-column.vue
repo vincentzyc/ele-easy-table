@@ -60,10 +60,6 @@ export default {
       type: Array,
       default: () => []
     },
-    disabledColumns: {
-      type: Array,
-      default: () => []
-    },
     defaultColumns: Array
   },
   data() {
@@ -123,7 +119,7 @@ export default {
     cancel() {
       this.visible = false
     },
-    confirm() {
+    async confirm() {
       let hadCheckedColumns = [], newCheckedColumns = [];
       this.allColumns.forEach(item => {
         if (this.checkedColumns.includes(item.key)) {
@@ -133,9 +129,8 @@ export default {
       })
       this.setLStorage(this.localName, newCheckedColumns);
       this.$emit('update:columns', []);
-      setTimeout(() => {
-        this.$emit('update:columns', hadCheckedColumns);
-      }, 10);
+      await this.$nextTick()
+      this.$emit('update:columns', hadCheckedColumns);
       this.visible = false
     },
     handleCheckAllChange(val) {
