@@ -23,10 +23,10 @@
         </el-dropdown>
       </template>
       <template slot="header1">
-        <span>
-          <span>自定义标题</span>
-          <i class="el-icon-star-on"></i>
-        </span>
+        <span style="margin-right:8px">自定义标题</span>
+        <el-tooltip effect="dark" content="Top Center 提示文字" placement="top">
+          <i class="el-icon-info"></i>
+        </el-tooltip>
       </template>
     </ele-easy-table>
     <CustomColumn
@@ -55,7 +55,7 @@ export default {
         pageSize: 10,
         totalCount: 6,
       },
-      defaultColumns:['data1','data3'],
+      defaultColumns: ['data1', 'data3'],
       baseColumns: [{
         key: 'data1',
         label: '标题1',
@@ -74,7 +74,7 @@ export default {
         key: 'data3',
         label: '操作',
         type: 'textBtn',
-        disabledCustom:true,
+        disabledCustom: true,
         textBtn: [{
           text: "操作一",
           funcConfig: row => {
