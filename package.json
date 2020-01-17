@@ -1,6 +1,6 @@
 {
   "name": "ele-easy-table",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "private": false,
   "description": "基于Vue,ElementUI开发的一款表格组件，对ElementUI的el-table进行二次封装",
   "author": "vincentzyc",
