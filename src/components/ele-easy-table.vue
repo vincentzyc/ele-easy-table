@@ -84,7 +84,7 @@
         type="index"
         :index="tableIndex"
         width="55"
-        v-if="table.showIndex!==false&&pagination"
+        v-if="table.showIndex!==false"
       ></el-table-column>
       <el-table-column
         v-for="column in table.columns"
