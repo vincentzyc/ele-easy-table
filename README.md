@@ -77,3 +77,24 @@ import 'ele-easy-table'
 
 ##### other element table events
 el-table原生事件，例如：@selection-change="handleSelectionChange" 详见[demo源码](https://github.com/vincentzyc/ele-easy-table/blob/master/src/components/ele-easy-table-demo.vue)
+
+### History
+##### v1.1.3 
+- 1.新增表格多选配置
+- 2.使用 v-bind="$attrs" v-on="$listeners" 移植el-table原生属性
+- 使用方法详见 ele-easy-table-demo
+
+##### v1.1.4
+- el-pagination 组件新增原生配置项
+
+##### v1.1.5
+- 新增自定义表头内容
+
+##### v1.1.6
+- 表格序号显示条件优化
+
+##### v1.1.7
+- 新增输入框支持enter按键查询表格
+
+##### v1.1.8
+- 修复表格序号显示bug

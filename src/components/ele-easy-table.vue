@@ -179,6 +179,10 @@ export default {
   watch: {
     'table.list': {
       handler() {
+        if (this.formData.totalCount > 0) {
+          let maxPageIndex = Math.ceil(this.formData.totalCount / this.formData.pageSize);
+          if (this.formData.pageIndex > maxPageIndex) this.formData.pageIndex = maxPageIndex;
+        }
         this.tableIndex = this.formData.pageSize * (this.formData.pageIndex - 1) + 1;
       },
       immediate: true
