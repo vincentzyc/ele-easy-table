@@ -28,6 +28,7 @@
             v-model="formData[item.key]"
             :placeholder="'请输入'+item.label"
             size="small"
+            @keyup.enter.native="$emit('getList')"
             :style="item.style"
             v-bind="item.config"
           ></el-input>
