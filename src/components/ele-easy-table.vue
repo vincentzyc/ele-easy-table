@@ -183,7 +183,12 @@ export default {
           let maxPageIndex = Math.ceil(this.formData.totalCount / this.formData.pageSize);
           if (this.formData.pageIndex > maxPageIndex) this.formData.pageIndex = maxPageIndex;
         }
-        this.tableIndex = this.formData.pageSize * (this.formData.pageIndex - 1) + 1;
+        if (this.formData.pageSize > 0 && this.formData.pageIndex > 0) {
+          this.tableIndex = this.formData.pageSize * (this.formData.pageIndex - 1) + 1;
+        } else {
+          //没有翻页功能
+          this.tableIndex = 1;
+        }
       },
       immediate: true
     }
