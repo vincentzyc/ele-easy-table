@@ -98,3 +98,6 @@ el-table原生事件，例如：@selection-change="handleSelectionChange" 详见
 
 ##### v1.1.8
 - 修复表格序号显示bug
+
+##### v1.1.9
+- 修复无翻页情况下表格序号显示bug
