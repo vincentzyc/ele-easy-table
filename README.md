@@ -46,6 +46,7 @@ import 'ele-easy-table'
 |----|-----|------|------|------|
 |class|表格查询条件区域样式设置|Object|-|-|
 |style|表格查询条件区域内联样式设置|Object|-|-|
+|foldNum|表格查询条件超过多少个时折叠|Number|-|无此参数则全部展示|
 |list|表格查询条件列表|Array|-|详见[demo源码](https://github.com/vincentzyc/ele-easy-table/blob/master/src/components/ele-easy-table-demo.vue)|
 
 - table 子配置项
@@ -101,3 +102,6 @@ el-table原生事件，例如：@selection-change="handleSelectionChange" 详见
 
 ##### v1.1.9
 - 修复无翻页情况下表格序号显示bug
+
+##### v1.2.0
+- 查询条件支持折叠
