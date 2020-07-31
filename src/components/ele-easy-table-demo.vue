@@ -40,6 +40,40 @@
 </template>
 <script>
 import CustomColumn from './custom-column'
+const allList = [{
+  data1: '000',
+  data2: '第000000',
+}, {
+  data1: '111',
+  data2: '第111111',
+}, {
+  data1: '222',
+  data2: '第222222',
+}, {
+  data1: '333',
+  data2: '第333333',
+}, {
+  data1: '444',
+  data2: '第444444',
+}, {
+  data1: '555',
+  data2: '第555555',
+}, {
+  data1: '666',
+  data2: '第666666',
+}, {
+  data1: '777',
+  data2: '第777777',
+}, {
+  data1: '888',
+  data2: '第888888',
+}, {
+  data1: '999',
+  data2: '第999999',
+}, {
+  data1: '101010',
+  data2: '第10101010',
+}]
 export default {
   components: {
     CustomColumn
@@ -53,7 +87,7 @@ export default {
         filterStartAndEndTime: ["2019-01-01", "2019-01-07"], //设置默认值
         pageIndex: 1,
         pageSize: 10,
-        totalCount: 6,
+        totalCount: 11,
       },
       defaultColumns: ['data1', 'data3'],
       baseColumns: [{
@@ -95,9 +129,10 @@ export default {
         slot: 'slot2'
       }],
       form: {
+        foldNum: 3,
         style: {
           background: '#f2f2f2',
-          paddingTop: '20px'
+          padding: '20px'
         },
         list: [{
           type: 'datePicker',
@@ -107,8 +142,16 @@ export default {
           label: '起止时间'
         }, {
           type: 'input',
-          key: 'modelName',
-          label: '输入框'
+          key: 'modelName1',
+          label: '输入框1'
+        }, {
+          type: 'input',
+          key: 'modelName2',
+          label: '输入框2'
+        }, {
+          type: 'input',
+          key: 'modelName3',
+          label: '输入框3'
         }, {
           type: 'select',
           key: 'productType',
@@ -135,6 +178,14 @@ export default {
           options: ['产品名称1', '产品名称2', '产品名称3'],
           label: '产品名称'
         }, {
+          type: 'select',
+          key: 'adType',
+          config: {
+            filterable: true
+          },
+          options: ['广告类型1', '广告类型2', '广告类型3'],
+          label: '广告类型'
+        }, {
           type: 'button',
           text: '查询',
           handleClick: () => {
@@ -159,32 +210,20 @@ export default {
             selectable: row => row.data1 !== '222'
           }
         },
-        list: [{
-          data1: '111',
-          data2: '第111111',
-        }, {
-          data1: '222',
-          data2: '第222222',
-        }, {
-          data1: '333',
-          data2: '第333333',
-        }, {
-          data1: '444',
-          data2: '第444444',
-        }, {
-          data1: '555',
-          data2: '第555555',
-        }, {
-          data1: '666',
-          data2: '第666666',
-        }],
+        list: [],
         columns: []
       }
     }
   },
   methods: {
+    getList() {
+      return allList.filter((item, key) =>
+        key < this.formData.pageSize * this.formData.pageIndex && key >= this.formData.pageSize * (this.formData.pageIndex - 1)
+      );
+    },
     async handleSearch() {
       console.log(this.formData);
+      this.table.list = this.getList()
     },
     handleSelectionChange(multipleSelection) {
       console.log(multipleSelection);
@@ -195,6 +234,9 @@ export default {
     handleView(command) {
       console.log(command);
     }
+  },
+  created() {
+    this.table.list = this.getList()
   }
 }
 </script>
