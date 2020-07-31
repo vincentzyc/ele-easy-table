@@ -10,7 +10,12 @@
       :class="form.class"
     >
       <template v-for="(item,key) in form.list">
-        <el-form-item :label="item.label?item.label+'：':''" :key="key" v-if="item.type!=='slot'">
+        <el-form-item
+          :label="item.label?item.label+'：':''"
+          :key="key"
+          v-if="item.type!=='slot'"
+          v-show="showFormItem(item,key)"
+        >
           <el-date-picker
             v-if="item.type==='datePicker'"
             v-model="formData[item.key]"
@@ -58,6 +63,26 @@
         </el-form-item>
         <slot v-else :name="item.slot"></slot>
       </template>
+      <div class="text-center" v-if="showFold">
+        <el-button type="text" @click="isExpand=!isExpand">
+          {{isExpand?'收起':'展开'}}
+          <svg
+            viewBox="0 0 48 48"
+            width="12px"
+            height="12px"
+            fill="#409EFF"
+            class="arrow-icon"
+            :class="{'arrow-expand':isExpand}"
+          >
+            <g fill-rule="evenodd">
+              <path
+                fill-rule="nonzero"
+                d="M24 21.91l10.586-10.586a2 2 0 0 1 2.828 2.828l-12 12a2 2 0 0 1-2.828 0l-12-12a2 2 0 0 1 2.828-2.828L24 21.91zm-10.586 1.414L24 33.91l10.586-10.586a2 2 0 0 1 2.828 2.828l-12 12a2 2 0 0 1-2.828 0l-12-12a2 2 0 0 1 2.828-2.828z"
+              />
+            </g>
+          </svg>
+        </el-button>
+      </div>
     </el-form>
 
     <el-table
@@ -173,6 +198,7 @@ export default {
   },
   data() {
     return {
+      isExpand: false,
       tableIndex: 0,
     }
   },
@@ -193,7 +219,18 @@ export default {
       immediate: true
     }
   },
+  computed: {
+    showFold() {
+      if (typeof this.form.foldNum !== 'number' || this.form.foldNum <= 0) return false
+      let num = this.form.list.filter(v => !['button', 'slot'].includes(v.type)).length
+      return num > this.form.foldNum - 1
+    }
+  },
   methods: {
+    showFormItem(item, key) {
+      if (typeof this.form.foldNum !== 'number' || this.form.foldNum <= 0 || item.type === 'button' || this.isExpand) return true
+      return key <= this.form.foldNum - 1
+    },
     getDate(item) {
       this.formData[item.startKey] = this.formData[item.key] ? this.formData[item.key][0] : "";
       this.formData[item.endKey] = this.formData[item.key] ? this.formData[item.key][1] : "";
@@ -239,5 +276,14 @@ export default {
 .pagination {
   float: right;
   margin: 20px 0;
+}
+.text-center {
+  text-align: center;
+}
+.arrow-icon {
+  transition: 0.5s;
+}
+.arrow-expand {
+  transform: rotate(180deg);
 }
 </style>
