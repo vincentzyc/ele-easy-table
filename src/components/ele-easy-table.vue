@@ -9,13 +9,8 @@
       :style="form.style"
       :class="form.class"
     >
-      <template v-for="(item,key) in form.list">
-        <el-form-item
-          :label="item.label?item.label+'：':''"
-          :key="key"
-          v-if="item.type!=='slot'"
-          v-show="showFormItem(item,key)"
-        >
+      <span v-for="(item,key) in form.list" :key="key" v-show="showFormItem(item,key)">
+        <el-form-item :label="item.label?item.label+'：':''" v-if="item.type!=='slot'">
           <el-date-picker
             v-if="item.type==='datePicker'"
             v-model="formData[item.key]"
@@ -62,7 +57,7 @@
           >{{item.text}}</el-button>
         </el-form-item>
         <slot v-else :name="item.slot"></slot>
-      </template>
+      </span>
       <div class="text-center" v-if="showFold">
         <el-button type="text" @click="isExpand=!isExpand">
           {{isExpand?'收起':'展开'}}
@@ -222,13 +217,13 @@ export default {
   computed: {
     showFold() {
       if (typeof this.form.foldNum !== 'number' || this.form.foldNum <= 0) return false
-      let num = this.form.list.filter(v => !['button', 'slot'].includes(v.type)).length
+      let num = this.form.list.filter(v => !(v.type === 'button' || v.fold === false)).length
       return num > this.form.foldNum - 1
     }
   },
   methods: {
     showFormItem(item, key) {
-      if (typeof this.form.foldNum !== 'number' || this.form.foldNum <= 0 || item.type === 'button' || this.isExpand) return true
+      if (typeof this.form.foldNum !== 'number' || this.form.foldNum <= 0 || item.type === 'button' || item.fold === false || this.isExpand) return true
       return key <= this.form.foldNum - 1
     },
     getDate(item) {

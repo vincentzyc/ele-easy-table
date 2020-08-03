@@ -200,7 +200,8 @@ export default {
           }
         }, {
           type: 'slot',
-          slot: 'slot1'
+          slot: 'slot1',
+          fold: false
         }]
       },
       table: {
