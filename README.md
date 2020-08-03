@@ -105,3 +105,6 @@ el-table原生事件，例如：@selection-change="handleSelectionChange" 详见
 
 ##### v1.2.0
 - 查询条件支持折叠
+
+##### v1.2.1
+- slot类型查询条件支持配置是否折叠
