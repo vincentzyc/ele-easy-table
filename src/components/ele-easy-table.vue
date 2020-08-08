@@ -28,7 +28,7 @@
             v-model="formData[item.key]"
             :placeholder="'请输入'+item.label"
             size="small"
-            @keyup.enter.native="$emit('getList')"
+            @keyup.enter.native="$emit('get-list')"
             :style="item.style"
             v-bind="item.config"
           ></el-input>
@@ -51,7 +51,7 @@
             v-if="item.type==='button'"
             type="primary"
             size="small"
-            @click="item.handleClick()"
+            @click="item.handleClick(item,key)"
             :style="item.style"
             v-bind="item.config"
           >{{item.text}}</el-button>
@@ -115,30 +115,30 @@
         align="center"
         v-bind="column.config"
       >
-        <template slot="header" slot-scope="{row}">
-          <slot v-if="column.header" :name="column.header" :row="row"></slot>
+        <template slot="header" slot-scope="scope">
+          <slot v-if="column.header" :name="column.header" :row="scope.row"></slot>
           <template v-else>{{column.label}}</template>
         </template>
 
-        <template slot-scope="{row}">
-          <template v-if="!column.hasOwnProperty('type')">{{ row[column.key] }}</template>
+        <template slot-scope="scope">
+          <template v-if="!column.hasOwnProperty('type')">{{ scope.row[column.key] }}</template>
           <template v-if="column.type==='format'">
-            <span v-html="column.format(row)"></span>
+            <span v-html="column.format(scope.row,scope)"></span>
           </template>
           <template v-if="column.type==='textBtn'">
             <span v-for="(btn,key) in column.textBtn" :key="key">
               <el-button
-                v-if="btn.text||btn.funcText(row)"
+                v-if="btn.text||btn.funcText(scope.row,scope)"
                 type="text"
-                @click="btn.handleClick(row)"
-                v-html="btn.text||btn.funcText(row)"
-                v-bind="btn.config||btn.funcConfig?btn.funcConfig(row):{}"
+                @click="btn.handleClick(scope.row,scope)"
+                v-html="btn.text||btn.funcText(scope.row,scope)"
+                v-bind="btn.config||btn.funcConfig?btn.funcConfig(scope.row,scope):{}"
                 class="mg-r10"
               ></el-button>
             </span>
           </template>
           <template v-if="column.type==='slot'">
-            <slot :name="column.slot" :row="row"></slot>
+            <slot :name="column.slot" :row="scope.row"></slot>
           </template>
         </template>
       </el-table-column>
