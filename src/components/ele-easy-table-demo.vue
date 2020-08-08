@@ -114,13 +114,13 @@ export default {
           funcConfig: row => {
             if (row.data1 === '333') return { disabled: true }
           },
-          handleClick: row => { console.log(row, '操作一') }
+          handleClick: (row, scope) => { console.log(row, scope) }
         }, {
           text: "操作二",
-          handleClick: row => { console.log(row, '操作二') }
+          handleClick: (row, scope) => { console.log(row, scope) }
         }, {
           text: "操作三",
-          handleClick: row => { console.log(row, '操作三') }
+          handleClick: (row, scope) => { console.log(row, scope) }
         }]
       }, {
         key: 'data4',
@@ -188,8 +188,8 @@ export default {
         }, {
           type: 'button',
           text: '查询',
-          handleClick: () => {
-            console.log('11111111111');
+          handleClick: (row, key) => {
+            console.log(row, key);
             this.handleSearch();
           }
         }, {
