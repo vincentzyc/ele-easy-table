@@ -108,3 +108,6 @@ el-table原生事件，例如：@selection-change="handleSelectionChange" 详见
 
 ##### v1.2.1
 - slot类型查询条件支持配置是否折叠
+
+##### v1.2.2
+- 表格handleClick事件支持第二个参数scope，可以获取到 row, column, $index 和 store（table 内部的状态管理）的数据，用法参考[demo源码](https://github.com/vincentzyc/ele-easy-table/blob/master/src/components/ele-easy-table-demo.vue)
