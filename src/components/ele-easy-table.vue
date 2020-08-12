@@ -59,7 +59,7 @@
         <slot v-else :name="item.slot"></slot>
       </span>
       <div class="text-center" v-if="showFold">
-        <el-button type="text" @click="isExpand=!isExpand">
+        <el-button type="text" @click="handleExpand()">
           {{isExpand?'收起':'展开'}}
           <svg
             viewBox="0 0 48 48"
@@ -87,10 +87,10 @@
       stripe
       tooltip-effect="light"
       border
-      class="mg-t20"
       v-if="Object.keys(table).length>0"
       v-bind="$attrs"
       v-on="$listeners"
+      style="overflow: visible;margin-top:20px;"
     >
       <el-table-column
         v-if="table.selection&&table.selection.show&&table.list.length>0"
@@ -222,6 +222,10 @@ export default {
     }
   },
   methods: {
+    handleExpand() {
+      this.isExpand = !this.isExpand;
+      this.$emit('handleExpand', this.isExpand);
+    },
     showFormItem(item, key) {
       if (typeof this.form.foldNum !== 'number' || this.form.foldNum <= 0 || item.type === 'button' || item.fold === false || this.isExpand) return true
       return key <= this.form.foldNum - 1
@@ -258,9 +262,6 @@ export default {
 }
 .clearfix:after {
   clear: both;
-}
-.mg-t20 {
-  margin-top: 20px;
 }
 .mg-r10 {
   margin-right: 10px;

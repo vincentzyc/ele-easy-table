@@ -6,6 +6,8 @@
       :formData.sync="formData"
       @getList="handleSearch"
       @selection-change="handleSelectionChange"
+      @handleExpand="handleExpand"
+      class="ele-easy-table-demo"
     >
       <template slot="slot1">
         <el-button type="primary" size="small" @click="test1()">测试测试</el-button>
@@ -217,6 +219,9 @@ export default {
     }
   },
   methods: {
+    handleExpand(isExpand) {
+      console.log(isExpand ? "展开" : "收起");
+    },
     getList() {
       return allList.filter((item, key) =>
         key < this.formData.pageSize * this.formData.pageIndex && key >= this.formData.pageSize * (this.formData.pageIndex - 1)
@@ -242,3 +247,10 @@ export default {
 }
 </script>
 
+<style scoped>
+.ele-easy-table-demo >>> .el-table__header-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+</style>
