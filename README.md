@@ -111,3 +111,30 @@ el-table原生事件，例如：@selection-change="handleSelectionChange" 详见
 
 ##### v1.2.2
 - 表格handleClick事件支持第二个参数scope，可以获取到 row, column, $index 和 store（table 内部的状态管理）的数据，用法参考[demo源码](https://github.com/vincentzyc/ele-easy-table/blob/master/src/components/ele-easy-table-demo.vue)
+
+##### v1.2.3
+- 新增 handleExpand 事件（条件折叠后的回调事件）
+
+| 事件 | 说明 | 参数 |
+|----|-----|------|
+|handleExpand|条件折叠后的回调事件|isExpand|
+
+- 表格新增内联样式 overflow: visible; 
+  实现表头粘性布局只需添加以下样式即可
+  > 注意：如果是 scoped 样式需使用 >>> 操作符（详情见文档[CSS作用域](https://vue-loader-v14.vuejs.org/zh-cn/features/scoped-css.html)）
+
+  ```css
+  /* 全局样式 */
+  .el-table__header-wrapper{
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+  /* scoped 局部样式 */
+  .ele-easy-table-demo >>> .el-table__header-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+  ```
+  详情见[demo源码](https://github.com/vincentzyc/ele-easy-table/blob/master/src/components/ele-easy-table-demo.vue)
