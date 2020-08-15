@@ -138,3 +138,6 @@ el-table原生事件，例如：@selection-change="handleSelectionChange" 详见
   }
   ```
   详情见[demo源码](https://github.com/vincentzyc/ele-easy-table/blob/master/src/components/ele-easy-table-demo.vue)
+
+##### v1.2.4
+- 查询条件支持配置placeholder
