@@ -26,7 +26,7 @@
           <el-input
             v-if="item.type==='input'"
             v-model="formData[item.key]"
-            :placeholder="'请输入'+item.label"
+            :placeholder="item.placeholder?item.placeholder:'请输入'+item.label"
             size="small"
             @keyup.enter.native="$emit('get-list')"
             :style="item.style"
@@ -37,7 +37,7 @@
             v-model="formData[item.key]"
             size="small"
             :style="item.style"
-            :placeholder="'请选择'+item.label"
+            :placeholder="item.placeholder?item.placeholder:'请选择'+item.label"
             v-bind="item.config"
           >
             <el-option

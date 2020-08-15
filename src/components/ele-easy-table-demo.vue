@@ -145,7 +145,8 @@ export default {
         }, {
           type: 'input',
           key: 'modelName1',
-          label: '输入框1'
+          label: '输入框1',
+          placeholder:"请输入姓名"
         }, {
           type: 'input',
           key: 'modelName2',
