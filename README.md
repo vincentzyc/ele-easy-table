@@ -141,3 +141,6 @@ el-table原生事件，例如：@selection-change="handleSelectionChange" 详见
 
 ##### v1.2.4
 - 查询条件支持配置placeholder
+
+##### v1.2.5
+- 自定义事件改用 kebab-case 命名,详情见[vuejs官网-自定义事件#事件名](https://cn.vuejs.org/v2/guide/components-custom-events.html#%E4%BA%8B%E4%BB%B6%E5%90%8D)
