@@ -4,9 +4,9 @@
       :form="form"
       :table="table"
       :formData.sync="formData"
-      @getList="handleSearch"
+      @get-list="handleSearch"
       @selection-change="handleSelectionChange"
-      @handleExpand="handleExpand"
+      @handle-expand="handleExpand"
       class="ele-easy-table-demo"
     >
       <template slot="slot1">
