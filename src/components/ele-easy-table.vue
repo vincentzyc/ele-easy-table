@@ -250,7 +250,7 @@ export default {
       this.$emit('get-list');
     }
   }
-};
+}
 </script>
 
 
