@@ -224,7 +224,7 @@ export default {
   methods: {
     handleExpand() {
       this.isExpand = !this.isExpand;
-      this.$emit('handleExpand', this.isExpand);
+      this.$emit('handle-expand', this.isExpand);
     },
     showFormItem(item, key) {
       if (typeof this.form.foldNum !== 'number' || this.form.foldNum <= 0 || item.type === 'button' || item.fold === false || this.isExpand) return true
@@ -240,14 +240,14 @@ export default {
         pageIndex: 1,
         pageSize: val
       })
-      this.$emit('getList');
+      this.$emit('get-list');
     },
     handleCurrentChange(val) {
       this.$emit('update:formData', {
         ...this.formData,
         pageIndex: val
       })
-      this.$emit('getList');
+      this.$emit('get-list');
     }
   }
 };
