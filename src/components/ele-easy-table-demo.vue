@@ -132,6 +132,10 @@ export default {
       }],
       form: {
         foldNum: 3,
+        config: { 'label-width': '100px' },
+        formItemStyle: {
+          width: "300px"
+        },
         style: {
           background: '#f2f2f2',
           padding: '20px'
@@ -141,12 +145,12 @@ export default {
           key: 'filterStartAndEndTime',
           startKey: 'filterStartTime',
           endKey: 'filterEndTime',
-          label: '起止时间'
+          label: '起止时间',
         }, {
           type: 'input',
           key: 'modelName1',
           label: '输入框1',
-          placeholder:"请输入姓名"
+          placeholder: "请输入姓名"
         }, {
           type: 'input',
           key: 'modelName2',
@@ -194,7 +198,8 @@ export default {
           handleClick: (row, key) => {
             console.log(row, key);
             this.handleSearch();
-          }
+          },
+          style: "margin-left:20px"
         }, {
           type: 'button',
           text: '自定义列',
