@@ -8,9 +8,10 @@
       v-if="Object.keys(form).length>0"
       :style="form.style"
       :class="form.class"
+      v-bind="form.config"
     >
       <span v-for="(item,key) in form.list" :key="key" v-show="showFormItem(item,key)">
-        <el-form-item :label="item.label?item.label+'：':''" v-if="item.type!=='slot'">
+        <el-form-item :label="item.label?item.label+'：':''" v-if="item.type!=='slot'" v-bind="item.formConfig">
           <el-date-picker
             v-if="item.type==='datePicker'"
             v-model="formData[item.key]"
@@ -20,7 +21,7 @@
             value-format="yyyy-MM-dd"
             @change="getDate(item)"
             size="small"
-            :style="item.style"
+            :style="item.style||form.formItemStyle"
             v-bind="item.config"
           ></el-date-picker>
           <el-input
@@ -29,14 +30,14 @@
             :placeholder="item.placeholder?item.placeholder:'请输入'+item.label"
             size="small"
             @keyup.enter.native="$emit('get-list')"
-            :style="item.style"
+            :style="item.style||form.formItemStyle"
             v-bind="item.config"
           ></el-input>
           <el-select
             v-if="item.type==='select'"
             v-model="formData[item.key]"
             size="small"
-            :style="item.style"
+            :style="item.style||form.formItemStyle"
             :placeholder="item.placeholder?item.placeholder:'请选择'+item.label"
             v-bind="item.config"
           >
