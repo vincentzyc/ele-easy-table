@@ -32,40 +32,40 @@ import 'ele-easy-table'
 ### API
 
 #### Props
-|属性 | 说明 | 类型 | 默认值 |
-|----|-----|------|------|
-|form|表格查询条件区域|Object|{}|
-|table|表格展示区域|Object|{}|
-|formData.sync|表格查询字段|Object|{}|
-|pagination|是否显示分页区域|[Boolean,Object]|true|
-|other attributes|el-table原生属性|参考[el-table原生属性](https://element.eleme.cn/#/zh-CN/component/table)|-|
+| 属性             | 说明             | 类型                                                                     | 默认值 |
+| ---------------- | ---------------- | ------------------------------------------------------------------------ | ------ |
+| form             | 表格查询条件区域 | Object                                                                   | {}     |
+| table            | 表格展示区域     | Object                                                                   | {}     |
+| formData.sync    | 表格查询字段     | Object                                                                   | {}     |
+| pagination       | 是否显示分页区域 | [Boolean,Object]                                                         | true   |
+| other attributes | el-table原生属性 | 参考[el-table原生属性](https://element.eleme.cn/#/zh-CN/component/table) | -      |
 
 - form 子配置项
 
-|属性 | 说明 | 类型 | 默认值 | 备注 |
-|----|-----|------|------|------|
-|class|表格查询条件区域样式设置|Object|-|-|
-|style|表格查询条件区域内联样式设置|Object|-|-|
-|foldNum|表格查询条件超过多少个时折叠|Number|-|无此参数则全部展示|
-|list|表格查询条件列表|Array|-|详见[demo源码](https://github.com/vincentzyc/ele-easy-table/blob/master/src/components/ele-easy-table-demo.vue)|
+| 属性    | 说明                         | 类型   | 默认值 | 备注                                                                                                            |
+| ------- | ---------------------------- | ------ | ------ | --------------------------------------------------------------------------------------------------------------- |
+| class   | 表格查询条件区域样式设置     | Object | -      | -                                                                                                               |
+| style   | 表格查询条件区域内联样式设置 | Object | -      | -                                                                                                               |
+| foldNum | 表格查询条件超过多少个时折叠 | Number | -      | 无此参数则全部展示                                                                                              |
+| list    | 表格查询条件列表             | Array  | -      | 详见[demo源码](https://github.com/vincentzyc/ele-easy-table/blob/master/src/components/ele-easy-table-demo.vue) |
 
 - table 子配置项
 
-|属性 | 说明 | 类型 | 默认值 | 备注 |
-|----|-----|------|------|------|
-|list|表格数据列表|Array|-|-|
-|columns|表格头部列表|Array|-|详见[demo源码](https://github.com/vincentzyc/ele-easy-table/blob/master/src/components/ele-easy-table-demo.vue)|
-|isLoading|是否显示表格加载动画|Boolean|-|
-|showIndex|是否显示序号列|Boolean|true|
-|indexFixed|是否固定序号列|Boolean|false|
-|indexLabel|自定义序号列表头文字|String|序号|
-|selection|表格多选配置|Object|{}|
+| 属性       | 说明                 | 类型    | 默认值 | 备注                                                                                                            |
+| ---------- | -------------------- | ------- | ------ | --------------------------------------------------------------------------------------------------------------- |
+| list       | 表格数据列表         | Array   | -      | -                                                                                                               |
+| columns    | 表格头部列表         | Array   | -      | 详见[demo源码](https://github.com/vincentzyc/ele-easy-table/blob/master/src/components/ele-easy-table-demo.vue) |
+| isLoading  | 是否显示表格加载动画 | Boolean | -      |
+| showIndex  | 是否显示序号列       | Boolean | true   |
+| indexFixed | 是否固定序号列       | Boolean | false  |
+| indexLabel | 自定义序号列表头文字 | String  | 序号   |
+| selection  | 表格多选配置         | Object  | {}     |
 
 - selection 子配置项
 
-|属性 | 说明 | 类型 | 默认值 | 备注 |
-|----|-----|------|------|------|
-|config|表格多选属性|Object|-|-|
+| 属性   | 说明         | 类型   | 默认值 | 备注 |
+| ------ | ------------ | ------ | ------ | ---- |
+| config | 表格多选属性 | Object | -      | -    |
 
 - pagination 子配置项
 
@@ -115,9 +115,9 @@ el-table原生事件，例如：@selection-change="handleSelectionChange" 详见
 ##### v1.2.3
 - 新增 handleExpand 事件（条件折叠后的回调事件）
 
-| 事件 | 说明 | 参数 |
-|----|-----|------|
-|handleExpand|条件折叠后的回调事件|isExpand|
+| 事件         | 说明                 | 参数     |
+| ------------ | -------------------- | -------- |
+| handleExpand | 条件折叠后的回调事件 | isExpand |
 
 - 表格新增内联样式 overflow: visible; 
   实现表头粘性布局只需添加以下样式即可
@@ -144,3 +144,6 @@ el-table原生事件，例如：@selection-change="handleSelectionChange" 详见
 
 ##### v1.2.5
 - 自定义事件改用 kebab-case 命名,详情见[vuejs官网-自定义事件#事件名](https://cn.vuejs.org/v2/guide/components-custom-events.html#%E4%BA%8B%E4%BB%B6%E5%90%8D)
+
+##### v1.2.6
+- el-form 和 el-form-item 支持原生配置项
