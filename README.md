@@ -138,6 +138,8 @@ el-table原生事件，例如：@selection-change="handleSelectionChange" 详见
   }
   ```
   详情见[demo源码](https://github.com/vincentzyc/ele-easy-table/blob/master/src/components/ele-easy-table-demo.vue)
+  
+  > 注意：无法与列固定同时使用，要同时使用可以用element原生表格属性，设置表格高度，无需设置此样式
 
 ##### v1.2.4
 - 查询条件支持配置placeholder
