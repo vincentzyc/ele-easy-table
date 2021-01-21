@@ -19,17 +19,18 @@
         <Draggable
           :animation="166"
           :group="{ name:'customColumn'}"
-          :list="showColumns"
+          :list="allColumns"
           class="el-checkbox-wrapper"
           ghostClass="ghost"
           handle=".el-checkbox__label"
         >
-          <!-- <el-tooltip v-for="item in showColumns" :key="item.key" :content="item.label" :open-delay="800" placement="top"> -->
+          <!-- <el-tooltip v-for="item in allColumns" :key="item.key" :content="item.label" :open-delay="800" placement="top"> -->
           <el-checkbox
             :disabled="item.disabledCustom"
             :key="item.key"
             :label="item.key"
-            v-for="item in showColumns"
+            v-for="item in allColumns"
+            v-show="showColumns.includes(item.key)"
           >{{item.label}}</el-checkbox>
           <!-- </el-tooltip> -->
         </Draggable>
@@ -87,6 +88,7 @@ export default {
       allColumns: [],
       showColumns: [],
       checkedColumns: [],
+      disabledCustoms: [],
       isIndeterminate: false
     }
   },
@@ -117,8 +119,8 @@ export default {
         window.location.reload();
       }
     },
-    searchColumns(v) {
-      this.showColumns = this.allColumns.filter(val => val.label.toUpperCase().includes(v.toUpperCase()))
+    searchColumns(v = '') {
+      this.showColumns = this.allColumns.filter(val => val.label.toUpperCase().includes(v.toUpperCase())).map(v => v.key)
       this.handleCheckedColumnsChange()
     },
     initLocalStorage() {
@@ -132,16 +134,20 @@ export default {
         this.baseColumns.forEach(item => {
           if (!checkedColumns.includes(item.key)) this.allColumns.push(item);
         })
-        this.showColumns = hadCheckedColumns.concat(this.allColumns);
         this.allColumns = hadCheckedColumns.concat(this.allColumns);
+        this.disabledCustoms = this.allColumns.filter(item => item.disabledCustom).map(v => v.key)
+        this.showColumns = this.allColumns.map(v => v.key);
         this.$emit('update:columns', hadCheckedColumns);
         return this.setLStorage(this.localName, checkedColumns);
       }
       this.allColumns = this.baseColumns;
-      this.showColumns = this.baseColumns;
+      this.disabledCustoms = this.allColumns.filter(item => item.disabledCustom).map(v => v.key)
+      this.showColumns = this.allColumns.map(v => v.key);
       return this.$emit('update:columns', this.baseColumns);
     },
     initShow() {
+      this.keyWord = ''
+      this.searchColumns(this.keyWord)
       this.checkedColumns = this.columns.map(v => v.key);
       this.handleCheckedColumnsChange()
     },
@@ -163,15 +169,15 @@ export default {
       this.visible = false
     },
     handleCheckAllChange(bool) {
-      const showColumnsKeys = bool ? this.showColumns.map(v => v.key) : this.showColumns.filter(item => !item.disabledCustom).map(v => v.key)
+      const showColumnsKeys = bool ? this.showColumns : this.showColumns.filter(v => !this.disabledCustoms.includes(v))
       this.checkedColumns = bool
         ? this.checkedColumns = [...new Set([...this.checkedColumns, ...showColumnsKeys])]
         : this.checkedColumns.filter(key => !showColumnsKeys.includes(key))
       this.handleCheckedColumnsChange()
     },
     handleCheckedColumnsChange() {
-      this.checkAll = this.showColumns.every(v => this.checkedColumns.includes(v.key))
-      this.isIndeterminate = !this.checkAll && this.showColumns.some(v => this.checkedColumns.includes(v.key))
+      this.checkAll = this.showColumns.every(v => this.checkedColumns.includes(v))
+      this.isIndeterminate = !this.checkAll && this.showColumns.some(v => this.checkedColumns.includes(v))
     }
   },
   beforeDestroy() {
