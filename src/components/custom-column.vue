@@ -1,29 +1,46 @@
 <template>
-  <el-dialog title="自定义列" :visible.sync="visible" width="880px" :showClose="false" class="custom-column-wrapper">
-    <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange" class="mg-b20">全选</el-checkbox>
-    <el-checkbox-group v-model="checkedColumns" @change="handleCheckedColumnsChange">
-      <Draggable
-        class="el-checkbox-wrapper"
-        :list="allColumns"
-        :group="{ name:'customColumn'}"
-        :animation="166"
-        ghostClass="ghost"
-        handle=".el-checkbox__label"
-      >
-        <!-- <el-tooltip v-for="item in allColumns" :key="item.key" :content="item.label" :open-delay="800" placement="top"> -->
-        <el-checkbox
-          v-for="item in allColumns"
-          :key="item.key"
-          :label="item.key"
-          :disabled="item.disabledCustom"
-        >{{item.label}}</el-checkbox>
-        <!-- </el-tooltip> -->
-      </Draggable>
-    </el-checkbox-group>
-
-    <div class="text-center" slot="footer">
-      <el-button @click="cancel()">取 消</el-button>
-      <el-button type="primary" @click="confirm()">确 定</el-button>
+  <el-dialog :showClose="false" :visible.sync="visible" class="custom-column-wrapper" width="880px">
+    <template slot="title">
+      <div class="custom-column-title-wrapper">
+        <div class="custom-column-title">自定义列</div>
+        <span class="custom-column-search">搜索列：</span>
+        <el-input
+          @input="searchColumns"
+          placeholder="请输入列名称"
+          size="mini"
+          style="width:200px"
+          v-model="keyWord"
+        ></el-input>
+      </div>
+    </template>
+    <div v-show="showColumns.length>0">
+      <el-checkbox :indeterminate="isIndeterminate" @change="handleCheckAllChange" v-model="checkAll">全选</el-checkbox>
+      <el-checkbox-group @change="handleCheckedColumnsChange" v-model="checkedColumns">
+        <Draggable
+          :animation="166"
+          :group="{ name:'customColumn'}"
+          :list="showColumns"
+          class="el-checkbox-wrapper"
+          ghostClass="ghost"
+          handle=".el-checkbox__label"
+        >
+          <!-- <el-tooltip v-for="item in showColumns" :key="item.key" :content="item.label" :open-delay="800" placement="top"> -->
+          <el-checkbox
+            :disabled="item.disabledCustom"
+            :key="item.key"
+            :label="item.key"
+            v-for="item in showColumns"
+          >{{item.label}}</el-checkbox>
+          <!-- </el-tooltip> -->
+        </Draggable>
+      </el-checkbox-group>
+      <div class="text-center" slot="footer">
+        <el-button @click="cancel()">取 消</el-button>
+        <el-button @click="confirm()" type="primary">确 定</el-button>
+      </div>
+    </div>
+    <div v-show="showColumns.length===0">
+      <p class="text-center custom-column-search">暂无列数据</p>
     </div>
   </el-dialog>
 </template>
@@ -64,9 +81,11 @@ export default {
   },
   data() {
     return {
+      keyWord: '',
       visible: false,
       checkAll: true,
       allColumns: [],
+      showColumns: [],
       checkedColumns: [],
       isIndeterminate: false
     }
@@ -89,10 +108,14 @@ export default {
       window.localStorage.setItem(key, str);
     },
     getLStorage(key) {
-      var str = "";
+      let str = "";
       str = window.localStorage.getItem(key);
       if (!str) return "";
       return window.JSON.parse(str);
+    },
+    searchColumns(v) {
+      this.showColumns = this.allColumns.filter(val => val.label.toUpperCase().includes(v.toUpperCase()))
+      this.handleCheckedColumnsChange()
     },
     initLocalStorage() {
       let checkedColumns = this.getLStorage(this.localName) || this.defaultColumns;
@@ -105,16 +128,18 @@ export default {
         this.baseColumns.forEach(item => {
           if (!checkedColumns.includes(item.key)) this.allColumns.push(item);
         })
+        this.showColumns = hadCheckedColumns.concat(this.allColumns);
         this.allColumns = hadCheckedColumns.concat(this.allColumns);
         this.$emit('update:columns', hadCheckedColumns);
         return this.setLStorage(this.localName, checkedColumns);
       }
       this.allColumns = this.baseColumns;
+      this.showColumns = this.baseColumns;
       return this.$emit('update:columns', this.baseColumns);
     },
     initShow() {
       this.checkedColumns = this.columns.map(v => v.key);
-      this.handleCheckedColumnsChange(this.columns)
+      this.handleCheckedColumnsChange()
     },
     cancel() {
       this.visible = false
@@ -133,16 +158,22 @@ export default {
       this.$emit('update:columns', hadCheckedColumns);
       this.visible = false
     },
-    handleCheckAllChange(val) {
-      this.checkedColumns = val ? this.allColumns.map(v => v.key) : this.allColumns.filter(item => item.disabledCustom).map(v => v.key);
-      let checkedCount = this.checkedColumns.length;
-      this.isIndeterminate = checkedCount > 0 && checkedCount < this.allColumns.length;
+    handleCheckAllChange(bool) {
+      const showColumnsKeys = bool ? this.showColumns.map(v => v.key) : this.showColumns.filter(item => !item.disabledCustom).map(v => v.key)
+      this.checkedColumns = bool
+        ? this.checkedColumns = [...new Set([...this.checkedColumns, ...showColumnsKeys])]
+        : this.checkedColumns.filter(key => !showColumnsKeys.includes(key))
+      this.handleCheckedColumnsChange()
     },
-    handleCheckedColumnsChange(value) {
-      let checkedCount = value.length;
-      this.checkAll = checkedCount === this.allColumns.length;
-      this.isIndeterminate = checkedCount > 0 && checkedCount < this.allColumns.length;
+    handleCheckedColumnsChange() {
+      this.checkAll = this.showColumns.every(v => this.checkedColumns.includes(v.key))
+      this.isIndeterminate = !this.checkAll && this.showColumns.some(v => this.checkedColumns.includes(v.key))
     }
+  },
+  beforeDestroy() {
+    this.allColumns = null
+    this.showColumns = null
+    this.checkedColumns = null
   },
   created() {
     this.initLocalStorage()
@@ -151,6 +182,18 @@ export default {
 </script>
 
 <style>
+.custom-column-wrapper .custom-column-title-wrapper {
+  display: flex;
+  align-content: center;
+}
+.custom-column-wrapper .custom-column-title {
+  flex: auto;
+  font-size: 18px;
+}
+.custom-column-wrapper .custom-column-search {
+  font-size: 14px;
+  color: #666;
+}
 .custom-column-wrapper .el-dialog__header {
   line-height: 30px;
   color: #303133;
@@ -172,7 +215,7 @@ export default {
 }
 
 .custom-column-wrapper .el-checkbox__label {
-  width: 180px;
+  width: 170px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -180,5 +223,8 @@ export default {
 
 .custom-column-wrapper .el-checkbox__label:hover {
   cursor: move;
+}
+.custom-column-wrapper .text-center {
+  text-align: center;
 }
 </style>
