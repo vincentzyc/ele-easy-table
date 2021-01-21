@@ -45,36 +45,47 @@ import CustomColumn from './custom-column'
 const allList = [{
   data1: '000',
   data2: '第000000',
+  data5: 'aaa'
 }, {
   data1: '111',
   data2: '第111111',
+  data5: 'bbb'
 }, {
   data1: '222',
   data2: '第222222',
+  data5: 'ccc'
 }, {
   data1: '333',
   data2: '第333333',
+  data5: 'ddd'
 }, {
   data1: '444',
   data2: '第444444',
+  data5: 'eee'
 }, {
   data1: '555',
   data2: '第555555',
+  data5: 'fff'
 }, {
   data1: '666',
   data2: '第666666',
+  data5: 'ggg'
 }, {
   data1: '777',
   data2: '第777777',
+  data5: 'hhh'
 }, {
   data1: '888',
   data2: '第888888',
+  data5: 'iii'
 }, {
   data1: '999',
   data2: '第999999',
+  data5: 'jjj'
 }, {
   data1: '101010',
   data2: '第10101010',
+  data5: 'kkk'
 }]
 export default {
   components: {
@@ -129,6 +140,9 @@ export default {
         label: '编辑',
         type: 'slot',
         slot: 'slot2'
+      },{
+        key: 'data5',
+        label: 'APK'
       }],
       form: {
         foldNum: 3,
