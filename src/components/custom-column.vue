@@ -104,14 +104,18 @@ export default {
   },
   methods: {
     setLStorage(key, value) {
-      let str = window.JSON.stringify(value);
+      const str = window.JSON.stringify(value);
       window.localStorage.setItem(key, str);
     },
     getLStorage(key) {
-      let str = "";
-      str = window.localStorage.getItem(key);
+      const str = window.localStorage.getItem(key);
       if (!str) return "";
-      return window.JSON.parse(str);
+      try {
+        return window.JSON.parse(str);
+      } catch (error) {
+        window.localStorage.removeItem(key);
+        window.location.reload();
+      }
     },
     searchColumns(v) {
       this.showColumns = this.allColumns.filter(val => val.label.toUpperCase().includes(v.toUpperCase()))
