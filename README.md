@@ -149,3 +149,9 @@ el-table原生事件，例如：@selection-change="handleSelectionChange" 详见
 
 ##### v1.2.6
 - el-form 和 el-form-item 支持原生配置项
+
+##### v1.2.7
+- 查询条件按钮支持动态配置disabled
+
+##### v1.2.8
+- 查询条件按钮支持动态配置显示文字
