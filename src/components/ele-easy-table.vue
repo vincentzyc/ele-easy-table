@@ -1,79 +1,84 @@
 <template>
   <div class="clearfix">
     <el-form
-      :model="formData"
-      :inline="true"
-      size="small"
-      class="relative"
-      v-if="Object.keys(form).length>0"
-      :style="form.style"
       :class="form.class"
+      :inline="true"
+      :model="formData"
+      :style="form.style"
+      class="relative"
+      size="small"
       v-bind="form.config"
+      v-if="Object.keys(form).length>0"
     >
-      <span v-for="(item,key) in form.list" :key="key" v-show="showFormItem(item,key)">
-        <el-form-item :label="item.label?item.label+'：':''" v-if="item.type!=='slot'" v-bind="item.formConfig">
+      <span :key="key" v-for="(item,key) in form.list" v-show="showFormItem(item,key)">
+        <el-form-item
+          :label="item.label?item.label+'：':''"
+          v-bind="item.formConfig"
+          v-if="item.type!=='slot'"
+        >
           <el-date-picker
+            :style="item.style||form.formItemStyle"
+            @change="getDate(item)"
+            end-placeholder="结束日期"
+            size="small"
+            start-placeholder="开始日期"
+            type="daterange"
+            v-bind="item.config"
             v-if="item.type==='datePicker'"
             v-model="formData[item.key]"
-            type="daterange"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
             value-format="yyyy-MM-dd"
-            @change="getDate(item)"
-            size="small"
-            :style="item.style||form.formItemStyle"
-            v-bind="item.config"
           ></el-date-picker>
           <el-input
+            :placeholder="item.placeholder?item.placeholder:'请输入'+item.label"
+            :style="item.style||form.formItemStyle"
+            @keyup.enter.native="$emit('get-list')"
+            size="small"
+            v-bind="item.config"
             v-if="item.type==='input'"
             v-model="formData[item.key]"
-            :placeholder="item.placeholder?item.placeholder:'请输入'+item.label"
-            size="small"
-            @keyup.enter.native="$emit('get-list')"
-            :style="item.style||form.formItemStyle"
-            v-bind="item.config"
           ></el-input>
           <el-select
+            :placeholder="item.placeholder?item.placeholder:'请选择'+item.label"
+            :style="item.style||form.formItemStyle"
+            size="small"
+            v-bind="item.config"
             v-if="item.type==='select'"
             v-model="formData[item.key]"
-            size="small"
-            :style="item.style||form.formItemStyle"
-            :placeholder="item.placeholder?item.placeholder:'请选择'+item.label"
-            v-bind="item.config"
           >
             <el-option
-              v-for="option in item.options"
+              :key="typeof(option.value)!=='undefined'?option.value:option"
               :label="typeof(option.label)!=='undefined'?option.label:option"
               :value="typeof(option.value)!=='undefined'?option.value:option"
-              :key="typeof(option.value)!=='undefined'?option.value:option"
+              v-for="option in item.options"
             ></el-option>
           </el-select>
           <el-button
-            v-if="item.type==='button'"
-            type="primary"
-            size="small"
-            @click="item.handleClick(item,key)"
+            :disabled="item.disabled?item.disabled():false"
             :style="item.style"
+            @click="item.handleClick(item,key)"
+            size="small"
+            type="primary"
             v-bind="item.config"
-          >{{item.text}}</el-button>
+            v-if="item.type==='button'"
+          >{{typeof item.text==='function'?item.text():item.text}}</el-button>
         </el-form-item>
-        <slot v-else :name="item.slot"></slot>
+        <slot :name="item.slot" v-else></slot>
       </span>
       <div class="text-center" v-if="showFold">
-        <el-button type="text" @click="handleExpand()">
+        <el-button @click="handleExpand()" type="text">
           {{isExpand?'收起':'展开'}}
           <svg
+            :class="{'arrow-expand':isExpand}"
+            class="arrow-icon"
+            fill="#409EFF"
+            height="12px"
             viewBox="0 0 48 48"
             width="12px"
-            height="12px"
-            fill="#409EFF"
-            class="arrow-icon"
-            :class="{'arrow-expand':isExpand}"
           >
             <g fill-rule="evenodd">
               <path
-                fill-rule="nonzero"
                 d="M24 21.91l10.586-10.586a2 2 0 0 1 2.828 2.828l-12 12a2 2 0 0 1-2.828 0l-12-12a2 2 0 0 1 2.828-2.828L24 21.91zm-10.586 1.414L24 33.91l10.586-10.586a2 2 0 0 1 2.828 2.828l-12 12a2 2 0 0 1-2.828 0l-12-12a2 2 0 0 1 2.828-2.828z"
+                fill-rule="nonzero"
               />
             </g>
           </svg>
@@ -82,42 +87,42 @@
     </el-form>
 
     <el-table
-      v-loading="table.isLoading"
-      element-loading-text="拼命加载中"
       :data="table.list"
-      stripe
-      tooltip-effect="light"
       border
-      v-if="Object.keys(table).length>0"
-      v-bind="$attrs"
-      v-on="$listeners"
+      element-loading-text="拼命加载中"
+      stripe
       style="overflow: visible;margin-top:20px;"
+      tooltip-effect="light"
+      v-bind="$attrs"
+      v-if="Object.keys(table).length>0"
+      v-loading="table.isLoading"
+      v-on="$listeners"
     >
       <el-table-column
-        v-if="table.selection&&table.selection.show&&table.list.length>0"
-        type="selection"
         align="center"
+        type="selection"
         v-bind="table.selection.config"
+        v-if="table.selection&&table.selection.show&&table.list.length>0"
       ></el-table-column>
       <el-table-column
-        :label="table.indexLabel||'序号'"
         :fixed="table.indexFixed||false"
+        :index="tableIndex"
+        :label="table.indexLabel||'序号'"
         align="center"
         type="index"
-        :index="tableIndex"
-        width="55"
         v-if="table.showIndex!==false"
+        width="55"
       ></el-table-column>
       <el-table-column
-        v-for="column in table.columns"
         :key="column.key+column.label"
-        :prop="column.key"
         :label="column.label"
+        :prop="column.key"
         align="center"
         v-bind="column.config"
+        v-for="column in table.columns"
       >
         <template slot="header" slot-scope="scope">
-          <slot v-if="column.header" :name="column.header" :row="scope.row"></slot>
+          <slot :name="column.header" :row="scope.row" v-if="column.header"></slot>
           <template v-else>{{column.label}}</template>
         </template>
 
@@ -127,14 +132,14 @@
             <span v-html="column.format(scope.row,scope)"></span>
           </template>
           <template v-if="column.type==='textBtn'">
-            <span v-for="(btn,key) in column.textBtn" :key="key">
+            <span :key="key" v-for="(btn,key) in column.textBtn">
               <el-button
-                v-if="btn.text||btn.funcText(scope.row,scope)"
-                type="text"
                 @click="btn.handleClick(scope.row,scope)"
-                v-html="btn.text||btn.funcText(scope.row,scope)"
-                v-bind="btn.config||btn.funcConfig?btn.funcConfig(scope.row,scope):{}"
                 class="mg-r10"
+                type="text"
+                v-bind="btn.config||btn.funcConfig?btn.funcConfig(scope.row,scope):{}"
+                v-html="btn.text||btn.funcText(scope.row,scope)"
+                v-if="btn.text||btn.funcText(scope.row,scope)"
               ></el-button>
             </span>
           </template>
@@ -150,14 +155,14 @@
       v-if="Object.keys(table).length>0 && pagination && Array.isArray(table.list) && table.list.length>0"
     >
       <el-pagination
+        :current-page="formData.pageIndex||1"
+        :layout="pagination.layout||'total, sizes, prev, pager, next, jumper'"
+        :page-size="formData.pageSize||10"
+        :page-sizes="pagination.pageSizes||[10, 20, 50, 100]"
+        :total="formData.totalCount||0"
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
-        :current-page="formData.pageIndex||1"
-        :page-size="formData.pageSize||10"
-        :total="formData.totalCount||0"
         v-bind="typeof(pagination)==='object'?pagination:{}"
-        :page-sizes="pagination.pageSizes||[10, 20, 50, 100]"
-        :layout="pagination.layout||'total, sizes, prev, pager, next, jumper'"
       ></el-pagination>
     </div>
   </div>

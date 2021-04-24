@@ -2,15 +2,15 @@
   <div>
     <ele-easy-table
       :form="form"
-      :table="table"
       :formData.sync="formData"
+      :table="table"
       @get-list="handleSearch"
-      @selection-change="handleSelectionChange"
       @handle-expand="handleExpand"
+      @selection-change="handleSelectionChange"
       class="ele-easy-table-demo"
     >
       <template slot="slot1">
-        <el-button type="primary" size="small" @click="test1()">测试测试</el-button>
+        <el-button @click="test1()" size="small" type="primary">测试测试</el-button>
       </template>
       <template slot="slot2" slot-scope="{row}">
         <el-dropdown :hide-on-click="false" @command="handleView">
@@ -26,17 +26,17 @@
       </template>
       <template slot="header1">
         <span style="margin-right:8px">自定义标题</span>
-        <el-tooltip effect="dark" content="Top Center 提示文字" placement="top">
+        <el-tooltip content="Top Center 提示文字" effect="dark" placement="top">
           <i class="el-icon-info"></i>
         </el-tooltip>
       </template>
     </ele-easy-table>
     <CustomColumn
+      :baseColumns="baseColumns"
+      :columns.sync="table.columns"
+      :defaultColumns="defaultColumns"
       :show.sync="showCustomColumn"
       localName="ELEEASYTABLE_CUSTOM_COLUMNS"
-      :baseColumns="baseColumns"
-      :defaultColumns="defaultColumns"
-      :columns.sync="table.columns"
     />
   </div>
 </template>
@@ -140,7 +140,7 @@ export default {
         label: '编辑',
         type: 'slot',
         slot: 'slot2'
-      },{
+      }, {
         key: 'data5',
         label: 'APK'
       }],
